@@ -15,12 +15,12 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS matching the clean, card-based Smartsheet KPI dashboard aesthetic with QBCO crimson branding
+# Custom CSS matching the clean, executive enterprise blue header aesthetic with QBCO crimson branding
 st.markdown("""
     <style>
     /* Global Background */
     .main {
-        background-color: #f8fafc;
+        background-color: #f4f6f9;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
@@ -30,20 +30,33 @@ st.markdown("""
         border-right: 1px solid #e2e8f0;
     }
 
+    /* Executive Top Blue Header Banner */
+    .exec-header {
+        background: #0056b3;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 6px rgba(0, 86, 179, 0.15);
+    }
+
     /* Card Containers matching template aesthetic */
     .dashboard-card {
         background-color: #ffffff;
         padding: 24px;
-        border-radius: 12px;
+        border-radius: 10px;
         border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         margin-bottom: 24px;
     }
     
     .card-title {
         font-size: 14px;
         font-weight: 700;
-        color: #334155;
+        color: #1e293b;
         letter-spacing: 0.5px;
         text-transform: uppercase;
         margin-bottom: 16px;
@@ -55,9 +68,9 @@ st.markdown("""
     .metric-card {
         background-color: #ffffff;
         padding: 18px;
-        border-radius: 10px;
+        border-radius: 8px;
         border: 1px solid #e2e8f0;
-        border-left: 4px solid #b91c1c;
+        border-left: 4px solid #0056b3;
         text-align: left;
         box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     }
@@ -79,7 +92,7 @@ st.markdown("""
     .plant-box {
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        border-left: 5px solid #b91c1c;
+        border-left: 5px solid #dc2626;
         padding: 14px;
         border-radius: 8px;
         text-align: left;
@@ -167,13 +180,13 @@ def limpiar_datos(dataframe):
 
 df = limpiar_datos(df)
 
-# STREAM_CHUNK:Rendering corporate header with logo support...
+# STREAM_CHUNK:Rendering executive header banner with logo support...
 col_logo, col_title = st.columns([1, 4])
 with col_logo:
     if uploaded_logo is not None:
         try:
             image = Image.open(uploaded_logo)
-            st.image(image, width=120)
+            st.image(image, width=130)
         except Exception:
             st.markdown("""
                 <div style="display: flex; align-items: center; gap: 12px; padding: 10px;">
@@ -196,10 +209,17 @@ with col_logo:
         """, unsafe_allow_html=True)
 
 with col_title:
-    st.markdown("### 📊 Plataforma de Seguimiento e Informes de Planes de Acción")
-    st.markdown("<p style='color: #64748b; font-size: 13px; margin-top: -10px;'>Control Operativo Nacional — 6 Plantas QBCO (Buga, DL, Llano, Auralac, CF, Fadeplast)</p>", unsafe_allow_html=True)
-
-st.markdown("<hr style='margin: 5px 0 20px 0; border: none; border-top: 1px solid #e2e8f0;'>", unsafe_allow_html=True)
+    st.markdown("""
+        <div class="exec-header">
+            <div>
+                <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: white;">Análisis de Indicadores — Planes de Acción</h2>
+                <p style="margin: 4px 0 0 0; font-size: 13px; color: #e2e8f0;">Control Operativo Nacional — 6 Plantas Grupo QBCO</p>
+            </div>
+            <div style="text-align: right; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 6px;">
+                MODO EJECUTIVO
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
 
 # STREAM_CHUNK:Configuring plant and detailed filters in sidebar...
 st.sidebar.markdown("---")
@@ -234,40 +254,40 @@ if selected_responsables and 'Responsable' in df_filtered.columns:
 if selected_ifs and 'IFS' in df_filtered.columns:
     df_filtered = df_filtered[df_filtered['IFS'].isin(selected_ifs)]
 
-# STREAM_CHUNK:Rendering interactive geographical plants diagram matching reference map...
+# STREAM_CHUNK:Rendering exact geographical plants diagram matching user's image reference...
 if seleccion_vista == "🌐 Consolidado Nacional (6 Plantas)":
     st.markdown("""
         <div class="dashboard-card">
             <div class="card-title">🗺️ Mapa de Ubicación Geográfica y Portafolio de Plantas — Grupo QBCO</div>
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Distribución estratégica nacional de las 6 plantas productivas y sus líneas de especialidad:</p>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Distribución estratégica nacional de las 6 plantas productivas y sus líneas de especialidad (Referencia Corporativa):</p>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
                 <div class="plant-box">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">PLANTA LLANOS DE CUIVÁ</span><br>
+                    <span style="font-size: 10px; font-weight: 800; color: #dc2626;">PLANTA LLANOS DE CUIVÁ</span><br>
                     <b style="font-size: 14px; color: #0f172a;">El Llano</b><br>
                     <span style="font-size: 11px; color: #475569;">🧀 Lácteos y Quesos</span>
                 </div>
                 <div class="plant-box">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">PLANTA RIONEGRO</span><br>
+                    <span style="font-size: 10px; font-weight: 800; color: #dc2626;">PLANTA RIONEGRO</span><br>
                     <b style="font-size: 14px; color: #0f172a;">Auralac</b><br>
                     <span style="font-size: 11px; color: #475569;">🥛 Lácteos y Derivados</span>
                 </div>
                 <div class="plant-box">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">PLANTA TOCANCIPÁ</span><br>
+                    <span style="font-size: 10px; font-weight: 800; color: #dc2626;">PLANTA TOCANCIPÁ</span><br>
                     <b style="font-size: 14px; color: #0f172a;">CF (Carnes Frías)</b><br>
                     <span style="font-size: 11px; color: #475569;">🥩 Carnes Frías y Embutidos</span>
                 </div>
                 <div class="plant-box">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">PLANTA TOCANCIPÁ</span><br>
+                    <span style="font-size: 10px; font-weight: 800; color: #dc2626;">PLANTA TOCANCIPÁ</span><br>
                     <b style="font-size: 14px; color: #0f172a;">DL</b><br>
                     <span style="font-size: 11px; color: #475569;">🧀 Quesos Especiales</span>
                 </div>
-                <div class="plant-box" style="border-left: 5px solid #0f172a;">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">PLANTA BUGA</span><br>
+                <div class="plant-box" style="border-left: 5px solid #0056b3;">
+                    <span style="font-size: 10px; font-weight: 800; color: #0056b3;">PLANTA BUGA (SEDE PRINCIPAL)</span><br>
                     <b style="font-size: 14px; color: #0f172a;">QBCO Buga</b><br>
                     <span style="font-size: 11px; color: #475569;">🥫 Salsas, Aceites, Bebidas, Vinagres</span>
                 </div>
                 <div class="plant-box">
-                    <span style="font-size: 10px; font-weight: 800; color: #b91c1c;">VALLE DEL CAUCA</span><br>
+                    <span style="font-size: 10px; font-weight: 800; color: #dc2626;">VALLE DEL CAUCA</span><br>
                     <b style="font-size: 14px; color: #0f172a;">Fadeplast</b><br>
                     <span style="font-size: 11px; color: #475569;">🧴 Envases PET</span>
                 </div>
@@ -329,7 +349,7 @@ with col_c1:
             anual_summary = df_recent.groupby(['Año', 'Estado']).size().reset_index(name='Cantidad')
             fig_anual = px.bar(
                 anual_summary, x='Año', y='Cantidad', color='Estado',
-                barmode='group', color_discrete_sequence=['#b91c1c', '#0f172a', '#64748b', '#cbd5e1']
+                barmode='group', color_discrete_sequence=['#dc2626', '#0056b3', '#64748b', '#cbd5e1']
             )
             fig_anual.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=10, b=10, l=10, r=10), legend=dict(orientation="h", y=1.15))
             st.plotly_chart(fig_anual, use_container_width=True)
@@ -346,7 +366,7 @@ with col_c2:
         if not mensual_summary.empty:
             fig_mensual = px.line(
                 mensual_summary, x='Mes_Año', y='Cantidad', color='Estado',
-                markers=True, color_discrete_sequence=['#b91c1c', '#0f172a', '#f59e0b', '#10b981']
+                markers=True, color_discrete_sequence=['#dc2626', '#0056b3', '#f59e0b', '#10b981']
             )
             fig_mensual.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=10, b=10, l=10, r=10), xaxis_tickangle=-45, legend=dict(orientation="h", y=1.15))
             st.plotly_chart(fig_mensual, use_container_width=True)
@@ -361,7 +381,7 @@ if seleccion_vista == "🌐 Consolidado Nacional (6 Plantas)":
         comp_planta = df_filtered.groupby(['Planta', 'Estado']).size().reset_index(name='Cantidad')
         fig_comp = px.bar(
             comp_planta, x='Planta', y='Cantidad', color='Estado',
-            barmode='stack', color_discrete_sequence=['#b91c1c', '#0f172a', '#f59e0b', '#64748b']
+            barmode='stack', color_discrete_sequence=['#dc2626', '#0056b3', '#f59e0b', '#64748b']
         )
         fig_comp.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=10, b=10, l=10, r=10), legend=dict(orientation="h", y=1.15))
         st.plotly_chart(fig_comp, use_container_width=True)
@@ -377,7 +397,7 @@ with col_p1:
         proc_vol.columns = ['Proceso', 'Volumen']
         fig_proc = px.pie(
             proc_vol, names='Proceso', values='Volumen', 
-            hole=0.5, color_discrete_sequence=['#b91c1c', '#0f172a', '#475569', '#94a3b8', '#cbd5e1']
+            hole=0.5, color_discrete_sequence=['#0056b3', '#dc2626', '#475569', '#94a3b8', '#cbd5e1']
         )
         fig_proc.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=10, b=10, l=10, r=10))
         st.plotly_chart(fig_proc, use_container_width=True)
@@ -391,7 +411,7 @@ with col_p2:
         origen_vol.columns = ['Origen', 'Cantidad']
         fig_orig = px.bar(
             origen_vol, x='Origen', y='Cantidad', text='Cantidad',
-            color='Origen', color_discrete_sequence=['#b91c1c', '#1e293b', '#475569', '#94a3b8', '#cbd5e1']
+            color='Origen', color_discrete_sequence=['#0056b3', '#1e293b', '#475569', '#94a3b8', '#cbd5e1']
         )
         fig_orig.update_layout(plot_bgcolor='white', paper_bgcolor='white', margin=dict(t=10, b=10, l=10, r=10), showlegend=False)
         st.plotly_chart(fig_orig, use_container_width=True)
@@ -435,7 +455,7 @@ with col_l2:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# STREAM_CHUNK:Rendering export and deployment helper section...
+# STREAM_CHUNK:Rendering export helper section...
 st.markdown('<div class="dashboard-card">', unsafe_allow_html=True)
 st.markdown('<div class="card-title">📥 Exportar Reporte Consolidado</div>', unsafe_allow_html=True)
 
