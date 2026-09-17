@@ -15,19 +15,27 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS matching the clean, executive enterprise blue header aesthetic with QBCO crimson branding
+# Custom CSS enforcing a clean executive light theme to prevent dark mode contrast bugs
 st.markdown("""
     <style>
-    /* Global Background */
-    .main {
-        background-color: #f4f6f9;
+    /* Global Light Theme Reset */
+    .main, .stApp, section[data-testid="stSidebar"] {
+        background-color: #f4f6f9 !important;
+        color: #0f172a !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
     /* Sidebar Styling */
     section[data-testid="stSidebar"] {
-        background-color: #ffffff;
+        background-color: #ffffff !important;
         border-right: 1px solid #e2e8f0;
+    }
+    
+    section[data-testid="stSidebar"] .stMarkdown h3, 
+    section[data-testid="stSidebar"] label, 
+    section[data-testid="stSidebar"] .stRadio label,
+    section[data-testid="stSidebar"] span {
+        color: #0f172a !important;
     }
 
     /* Executive Top Blue Header Banner */
@@ -43,7 +51,7 @@ st.markdown("""
         box-shadow: 0 4px 6px rgba(0, 86, 179, 0.15);
     }
 
-    /* Card Containers matching template aesthetic */
+    /* Card Containers */
     .dashboard-card {
         background-color: #ffffff;
         padding: 24px;
@@ -215,7 +223,7 @@ with col_title:
                 <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: white;">Análisis de Indicadores — Planes de Acción</h2>
                 <p style="margin: 4px 0 0 0; font-size: 13px; color: #e2e8f0;">Control Operativo Nacional — 6 Plantas Grupo QBCO</p>
             </div>
-            <div style="text-align: right; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 6px;">
+            <div style="text-align: right; font-size: 12px; font-weight: 600; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 6px; color: white;">
                 MODO EJECUTIVO
             </div>
         </div>
